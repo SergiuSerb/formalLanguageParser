@@ -1,8 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using Application.Business.Models;
 using Application.Business.ParseLanguage;
+using Application.Business.QuickValidate;
 
 namespace Application
 {
@@ -22,13 +25,17 @@ namespace Application
             bool hasNoErrors = true;
             if (tabControl.SelectedIndex == 0)
             {
-                textToParse = textBoxInputTextBox.Text;
+                textToParse = textBoxInputTextBox.Text
+                                                 .Replace(" ", "")
+                                                 .Replace("\r\n", "");
             }
             else
             {
                 try
                 {
                     textToParse = File.ReadAllText($"{fileInputTextBox.Text}");
+                    textToParse = textToParse.Replace(" ", "")
+                                             .Replace("\r\n", "");
                 }
                 catch (Exception exception)
                 {
@@ -114,6 +121,57 @@ namespace Application
             return new ParseLanguageRequest
             {
                 TextToParse = textToParse
+            };
+        }
+
+        private void textBoxInputTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string textToValidate = textBoxInputTextBox.Text.Replace(" ", "")
+                                                       .Replace("\r\n", "");
+            QuickValidateRequest request = CreateQuickValidateRequest(textToValidate);
+            QuickValidateCommand command = CreateQuickValidateCommand();
+            QuickValidateResponse response = command.Execute(request);
+
+            ProcessResponse(response);
+        }
+
+        private void ProcessResponse(QuickValidateResponse response)
+        {
+            endingSymbolLabel.Foreground = new SolidColorBrush(response.HasEndingSymbol
+                ? Colors.Green
+                : Colors.Red);
+
+            startingSymbolLabel.Foreground = new SolidColorBrush(response.HasStartingSymbol
+                ? Colors.Green
+                : Colors.Red);
+
+            identitySymbolsLabel.Foreground = new SolidColorBrush(response.HasIdentitySymbol
+                ? Colors.Green
+                : Colors.Red);
+
+            nonTerminalSymbolsLabel.Foreground = new SolidColorBrush(response.HasNonTerminalSymbols
+                ? Colors.Green
+                : Colors.Red);
+
+            terminalSymbolsLabel.Foreground = new SolidColorBrush(response.HasTerminalSymbols
+                ? Colors.Green
+                : Colors.Red);
+
+            productionsLabel.Foreground = new SolidColorBrush(response.HasProductions
+                ? Colors.Green
+                : Colors.Red);
+        }
+
+        private QuickValidateCommand CreateQuickValidateCommand()
+        {
+            return new QuickValidateCommand();
+        }
+
+        private QuickValidateRequest CreateQuickValidateRequest(string textToValidate)
+        {
+            return new QuickValidateRequest
+            {
+                TextToValidate = textToValidate
             };
         }
     }
