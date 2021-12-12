@@ -1,0 +1,34 @@
+﻿<Window x:Class="Application.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Application"
+        mc:Ignorable="d"
+        Title="Language Parser" Height="390" Width="700" ResizeMode="NoResize">
+    <Grid Width="700">
+        <TextBox x:Name="resultTextBox" HorizontalAlignment="Right" Margin="355,33,25,10" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="315" IsReadOnly="True"/>
+        <TabControl x:Name="tabControl" Margin="10,10,350,0" VerticalAlignment="Top" Height="275">
+            <TabItem Header="TextBox Input" Height="22">
+                <Grid Background="#FFE5E5E5">
+                    <Label Content="Please input the sequence to parse into&#xA;the following texbox:" HorizontalAlignment="Center" Height="44" VerticalAlignment="Top" Width="314" Margin="0,10,0,0"/>
+                    <TextBox x:Name="textBoxInputTextBox" HorizontalAlignment="Center" Height="106" Margin="0,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="314" TextChanged="textBoxInputTextBox_TextChanged"/>
+                    <Label x:Name="productionsLabel" Content="Grammar has productions." HorizontalAlignment="Left" Height="25" VerticalAlignment="Bottom" Width="314" Margin="10,10,10,0" Foreground="Red"/>
+                    <Label x:Name="terminalSymbolsLabel" Content="Grammar has terminal symbols." HorizontalAlignment="Left" Height="25" VerticalAlignment="Bottom" Width="314" Margin="10,0,0,12" Foreground="Red"/>
+                    <Label x:Name="nonTerminalSymbolsLabel" Content="Grammar has non-terminal symbols." HorizontalAlignment="Left" Height="25" VerticalAlignment="Bottom" Width="314" Margin="10,0,0,24" Foreground="Red"/>
+                    <Label x:Name="identitySymbolsLabel" Content="Grammar has identity symbol." HorizontalAlignment="Left" Height="25" VerticalAlignment="Bottom" Width="314" Margin="10,0,0,36" Foreground="Red"/>
+                    <Label x:Name="startingSymbolLabel" Content="Grammar has starting symbol." HorizontalAlignment="Left" Height="25" VerticalAlignment="Bottom" Width="314" Foreground="Red" Margin="10,0,0,48"/>
+                    <Label x:Name="endingSymbolLabel" Content="Grammar has ending symbol." HorizontalAlignment="Left" Height="25" VerticalAlignment="Bottom" Width="314" Foreground="Red" Margin="10,0,0,60"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="File Input" Height="22">
+                <Grid>
+                    <Label Content="Please input the absolute path to the text file that&#xA;contains the text to parse in the following textbox:" HorizontalAlignment="Center" Height="48" VerticalAlignment="Top" Width="314" Margin="0,10,0,0" Panel.ZIndex="10"/>
+                    <TextBox x:Name="fileInputTextBox" HorizontalAlignment="Center" Height="176" Margin="0,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="314"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button x:Name="parseButton" Content="Parse" HorizontalAlignment="Left" Height="48" Margin="10,293,0,10" VerticalAlignment="Bottom" Width="338" Click="parseButton_Click"/>
+
+    </Grid>
+</Window>
