@@ -47,7 +47,7 @@ namespace Application
             }
         }
 
-        private string ParseResponse(ParseLanguageResponse response)
+        private static string ParseResponse(ParseLanguageResponse response)
         {
             if (!response.IsValid)
             {
@@ -62,12 +62,12 @@ namespace Application
             return $"{parsedInitialText}\n{parsedProductions}\n{parsedNonTerminalSymbols}\n{parsedTerminalSymbols}";
         }
 
-        private string ParseInitialText(ParseLanguageResponse response)
+        private static string ParseInitialText(ParseLanguageResponse response)
         {
             return $"Init = {response.InitialText}";
         }
 
-        private string ParseProductions(ParseLanguageResponse response)
+        private static string ParseProductions(ParseLanguageResponse response)
         {
             string parsedResponse = new string(' ', 0);
             foreach (Production production in response.Productions)
@@ -78,7 +78,7 @@ namespace Application
             return $"Prod = {{{parsedResponse}}}";
         }
 
-        private string ParseNonTerminalSymbols(ParseLanguageResponse response)
+        private static string ParseNonTerminalSymbols(ParseLanguageResponse response)
         {
             string parsedResponse = new string(' ', 0);
             foreach (string symbol in response.NonTerminalSymbols)
@@ -91,7 +91,7 @@ namespace Application
             return $"Vn = {{{parsedResponse}}}";
         }
 
-        private string ParseTerminalSymbols(ParseLanguageResponse response)
+        private static string ParseTerminalSymbols(ParseLanguageResponse response)
         {
             string parsedResponse = new string(' ', 0);
             foreach (string symbol in response.TerminalSymbols)
@@ -104,12 +104,12 @@ namespace Application
             return $"Vt = {{{parsedResponse}}}";
         }
 
-        private ParseLanguageCommand CreateParseLanguageCommand()
+        private static ParseLanguageCommand CreateParseLanguageCommand()
         {
             return new ParseLanguageCommand();
         }
 
-        private ParseLanguageRequest CreateParseLanguageRequest(string textToParse)
+        private static ParseLanguageRequest CreateParseLanguageRequest(string textToParse)
         {
             return new ParseLanguageRequest
             {
